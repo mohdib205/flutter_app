@@ -27,7 +27,7 @@ class _ProdStfState extends State<ProdStf> {
   }
 
   Future<List<Map<String, dynamic>>> fetchProductData() async {
-    final response = await http.get(Uri.parse("https://b0g6wnld-8000.inc1.devtunnels.ms/custom/"));
+    final response = await http.get(Uri.parse("https://modestgallery.pythonanywhere.com/custom/"));
 
     if (response.statusCode==200) {
       // final data = json.decode(response.body);
@@ -139,17 +139,16 @@ class _ProdStfState extends State<ProdStf> {
 
                               child: InkWell(
                                 onTap: () {
-                                  // print("Card tapped!"+ ProductData[index]["product_variation_id"] );
+    // print("Card tapped!"+ ProductData[index]["product_variation_id"] );
 
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) =>
-                                        ProdDetails(
-                                          id: ProductData[index]["product_variation_id"],)),
-                                  ); // QuantitySelector();
-
-                                  child:
-                                  Card(
+    Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) =>
+    ProdDetails(
+    id: ProductData[index]["product_variation_id"],)),
+    ); // QuantitySelector();
+    },
+                                  child:Card(
 
                                     elevation: 200,
 
@@ -219,9 +218,9 @@ class _ProdStfState extends State<ProdStf> {
 
                                       ],
                                     ),
-                                  );
-                                }
-                              ));
+    ))
+
+                              );
 
 
                         },);
@@ -258,7 +257,7 @@ class _ProdStfState extends State<ProdStf> {
 // class MyPage extends StatelessWidget {
 //
 //   Future<List<Map<String, dynamic>>> fetchProductData() async {
-//     final response = await http.get(Uri.parse("https://b0g6wnld-8000.inc1.devtunnels.ms/custom/"));
+//     final response = await http.get(Uri.parse("https://modestgallery.pythonanywhere.com//custom/"));
 //
 //     if (response.statusCode==200) {
 //       // final data = json.decode(response.body);
@@ -471,7 +470,7 @@ class _ProdStfState extends State<ProdStf> {
 // class MyPage extends StatelessWidget {
 //
 //   Future<List<Map<String, dynamic>>> fetchProductData() async {
-//     final response = await http.get(Uri.parse("https://b0g6wnld-8000.inc1.devtunnels.ms/custom/"));
+//     final response = await http.get(Uri.parse("https://modestgallery.pythonanywhere.com//custom/"));
 //
 //     if (response.statusCode==200) {
 //       // final data = json.decode(response.body);

@@ -99,7 +99,7 @@ class SearchBar  extends StatelessWidget{
 class ImagesScrollBar extends StatelessWidget {
   // Function to fetch data from API
   Future<List<Map<String, dynamic>>> fetchCarouselData() async {
-    final response = await http.get(Uri.parse("https://b0g6wnld-8000.inc1.devtunnels.ms/carousal/"));
+    final response = await http.get(Uri.parse("https://modestgallery.pythonanywhere.com/carousal/"));
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
       return data
@@ -217,7 +217,7 @@ class ImageCarousal extends StatelessWidget{
 
 
   Future<List<Map<String, dynamic>>> fetchCollections() async {
-    final response= await http.get(Uri.parse("https://b0g6wnld-8000.inc1.devtunnels.ms/collections/"));
+    final response= await http.get(Uri.parse("https://modestgallery.pythonanywhere.com/collections/"));
     if (response.statusCode==200){
       final List<dynamic> data= json.decode(response.body);
 
@@ -286,7 +286,7 @@ class ImageCarousal extends StatelessWidget{
 
 class  ImageText extends StatelessWidget{
   Future<List<Map<String, dynamic>>> fetchCategories() async{
-    final response =  await http.get(Uri.parse("https://b0g6wnld-8000.inc1.devtunnels.ms/category/"));
+    final response =  await http.get(Uri.parse("https://modestgallery.pythonanywhere.com/category/"));
 
     if (response.statusCode==200){
       List<dynamic> data= json.decode(response.body);

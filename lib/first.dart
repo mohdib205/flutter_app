@@ -7,12 +7,12 @@ import 'dart:convert'; // For JSON decoding
 
 import 'package:http/http.dart' as http;
 
-String ur="https://b0g6wnld-8000.inc1.devtunnels.ms";
+String ur="https://modestgallery.pythonanywhere.com";
 void main(){
   runApp(MyApp());
 }
 Future<String> getData() async {
-  http.Response res = await http.get(Uri.parse("https://b0g6wnld-8000.inc1.devtunnels.ms/carousal/"));
+  http.Response res = await http.get(Uri.parse("https://modestgallery.pythonanywhere.com/carousal/"));
       return res.body;
   }
 

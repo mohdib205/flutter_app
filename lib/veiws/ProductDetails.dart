@@ -89,8 +89,8 @@ class ProdDetails extends StatelessWidget{
   }) : super(key: key);
 
    Future<List<Map<String, dynamic>>> fetchProductVarData() async {
-     // print("https://b0g6wnld-8000.inc1.devtunnels.ms/filter/${id}/");
-     final response = await http.get(Uri.parse("https://b0g6wnld-8000.inc1.devtunnels.ms/filter/${id}/"));
+     // print("https://modestgallery.pythonanywhere.com/filter/${id}/");
+     final response = await http.get(Uri.parse("https://modestgallery.pythonanywhere.com/filter/${id}/"));
 
      if (response.statusCode==200) {
        // final data = json.decode(response.body);
