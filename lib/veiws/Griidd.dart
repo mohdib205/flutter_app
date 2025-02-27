@@ -32,13 +32,7 @@ class _ProdStfState extends State<ProdStf> {
     if (response.statusCode==200) {
       // final data = json.decode(response.body);
       List<dynamic> data = json.decode(response.body);
-      getTokens().then((e){
-        print(1);
-        print( e["access"]);
-        print(2);
-        print( e["refresh"]);
-        print(3);
-      });
+
 
       return data.map((e) =>
       ({
