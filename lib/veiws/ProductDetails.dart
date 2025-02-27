@@ -281,9 +281,9 @@ class ProdDetails extends StatelessWidget{
                                     fontSize: 20, // Reduced font size
                                     color: Colors.black87,
                                   ),
-                                  overflow: TextOverflow.ellipsis, // Ellipsis for overflow handling
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                SizedBox(height: 10), // Add spacing between text
+                                SizedBox(height: 10),
                                 QuantitySelector(),
                                 // SizedBox(height: 50,),
                                 Flexible(

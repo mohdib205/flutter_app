@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
 
   void _onItemTapped(int index) {
     setState(() {
-      _currentidx = index; // Update the selected index
+      _currentidx = index; // updating
     });
   }
 
@@ -47,10 +47,10 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
 
-        body: _pages[_currentidx], // Display the selected page
+        body: _pages[_currentidx], // display  the  page of current index fromm pages
         bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _currentidx, // Highlight the selected item
-          onTap: _onItemTapped, // Handle navigation
+          currentIndex: _currentidx, //   selected item
+          onTap: _onItemTapped, //  navigation
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home

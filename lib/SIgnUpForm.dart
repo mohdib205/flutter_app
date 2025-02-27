@@ -143,7 +143,25 @@ class SignUpForm extends StatelessWidget{
 
                   ),
                   SizedBox(height: 20,),
-                  
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width > 600
+                        ? 500 : MediaQuery.of(context).size.width * 0.9,
+                    child: TextFormField(
+                        keyboardType: TextInputType.phone,
+                        controller: pass_c,
+
+                        decoration: InputDecoration(
+                          hintText: 'Password' ,
+                          label: Text('Password'),
+                          contentPadding:
+                          EdgeInsets.only(bottom: 10.0, left: 10.0, right: 10.0),
+                          icon: Icon(Icons.phone) ,
+                          border: OutlineInputBorder(),
+
+                        )),
+                  ),
+                  SizedBox(height: 20,),
+
                   Container(
 
                     width: MediaQuery.of(context).size.width > 600
@@ -184,36 +202,36 @@ class SignUpForm extends StatelessWidget{
 
 }
 
-class MyBottomBar extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
+// class MyBottomBar extends StatelessWidget{
+//   @override
+//   Widget build(BuildContext context) {
+//
+//     return Container(
+//       // color: Colors.red,
+//       padding: EdgeInsets.symmetric(vertical: 10),
+//       child: Row(
+//
+//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//         children: [
+//           IconButton(onPressed: ()=>{
+//     print(Navigator.of(context)),
+//     Navigator.pushReplacementNamed(context, "/home")
+//           }, icon: Icon(Icons.home ) ,   )  ,
+//           IconButton(onPressed: ()=>{
+//             Navigator.pushReplacementNamed(context, "/account")
+//
+//
+//           }, icon: Icon(Icons.person) ,color: Colors.red,) ,
+//           IconButton(onPressed: ()=>{
+//             Navigator.pushReplacementNamed(context, "/products")
+//
+//           }, icon: Icon(Icons.shop) ,) ,
+//
+//
+//         ],
+//       ),
+//     );
+//   }
 
-    return Container(
-      // color: Colors.red,
-      padding: EdgeInsets.symmetric(vertical: 10),
-      child: Row(
 
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          IconButton(onPressed: ()=>{
-    print(Navigator.of(context)),
-    Navigator.pushReplacementNamed(context, "/home")
-          }, icon: Icon(Icons.home ) ,   )  ,
-          IconButton(onPressed: ()=>{
-            Navigator.pushReplacementNamed(context, "/account")
-
-
-          }, icon: Icon(Icons.person) ,color: Colors.red,) ,
-          IconButton(onPressed: ()=>{
-            Navigator.pushReplacementNamed(context, "/products")
-
-          }, icon: Icon(Icons.shop) ,) ,
-
-
-        ],
-      ),
-    );
-  }
-
-
-}
+// }
