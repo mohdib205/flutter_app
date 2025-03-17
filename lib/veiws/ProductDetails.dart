@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'ServerUrl.dart';
+
 // void main(){
 //   runApp(
 //     MaterialApp(
@@ -90,7 +92,7 @@ class ProdDetails extends StatelessWidget{
 
    Future<List<Map<String, dynamic>>> fetchProductVarData() async {
      // print("https://modestgallery.pythonanywhere.com/filter/${id}/");
-     final response = await http.get(Uri.parse("https://modestgallery.pythonanywhere.com/filter/${id}/"));
+     final response = await http.get(Uri.parse("${BackendApi.endpoint("filter")}${id}/"));
 
      if (response.statusCode==200) {
        // final data = json.decode(response.body);

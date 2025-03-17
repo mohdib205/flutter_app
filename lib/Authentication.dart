@@ -1,7 +1,13 @@
 import 'dart:convert';
+import 'package:first_project/SIgnUpForm.dart';
+import 'package:first_project/veiws/ServerUrl.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+
+import 'first.dart';
+
 
 
 
@@ -10,7 +16,7 @@ final storage = FlutterSecureStorage();
 
 void main(){
 
-  print("Hello World");
+
   runApp(LoginForm());
 }
 
@@ -31,7 +37,7 @@ class LoginForm extends StatelessWidget{
   theme:  ThemeData(primarySwatch: Colors.green),
   home: Scaffold(
   appBar:AppBar(
-  title: Center(child: Text('Sign Up Form')),
+  title: Center(child: Text('Log In Form')),
   ),
   body: SingleChildScrollView(
 
@@ -108,6 +114,11 @@ class LoginForm extends StatelessWidget{
   print(data);
   login(uname_c.text, pass_c.text).then((tokens) {
     print(tokens['access']);
+
+      Map<String, dynamic> decodedToken = JwtDecoder.decode(tokens['access']!);
+      print(JwtDecoder.isExpired(tokens['access']!));
+      print(decodedToken);
+
     print(tokens['refresh']);
     storeTokens(tokens);
   }).catchError((e) {
@@ -119,10 +130,34 @@ class LoginForm extends StatelessWidget{
   // pass_c.clear();
   }
   },
-  child: Text('Submit'),
-  ),
-  ),
+  child: Text('Log In'),
 
+  ),
+  ),
+SizedBox(height: 10,),
+Container(
+  child: Wrap(
+    children: [
+      Text("Register Account    " , style: TextStyle(fontSize: 15 , fontWeight: FontWeight.bold),),
+      ElevatedButton(onPressed: () {
+        // print("Card tapped!"+ ProductData[index]["product_variation_id"] );
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) =>
+              MyApp(custom: 0,))); // QuantitySelector();
+      },child: Text("Sign Up")
+      , style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero, // Rectangular border
+            )
+
+      ))
+    ],
+  ),
+)
   ],
   )),
   )],
@@ -138,7 +173,7 @@ class LoginForm extends StatelessWidget{
 
 Future<Map<String,String>> login(String username, String password) async {
   final response = await http.post(
-    Uri.parse('https://modestgallery.pythonanywhere.com/login/'),
+    Uri.parse(BackendApi.endpoint("login")),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -154,6 +189,7 @@ Future<Map<String,String>> login(String username, String password) async {
       'refresh':jsonDecode(response.body)['refresh']
   };
   } else {
+    print(response.statusCode);
     throw Exception(' login failedd');
   }
 }
@@ -168,3 +204,45 @@ Future<Map<String,String?>> getTokens() async {
     'refresh':await storage.read(key: 'refresh')
   };
 }
+
+Future<String> getAccesstoken() async {
+  String? currentAccess= await storage.read(key: 'access');
+  String? refreshToken = await storage.read(key: 'refresh');
+  if (refreshToken == null 	|| JwtDecoder.isExpired(refreshToken) ) {
+    print("No refresh token found or expired");
+    return "u needs to log in again";
+  }
+
+  if (JwtDecoder.isExpired(currentAccess!)){
+    final res= await http.post(Uri.parse(BackendApi.endpoint("refreshtoken")),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+
+      body: jsonEncode(<String, String>{
+        'refresh': refreshToken,
+      }),
+    );
+    if (res.statusCode==200){
+      final Map<String, dynamic> response = jsonDecode(res.body);
+      String acc= response["access"];
+
+      print("accc  ${acc}");
+      storage.write(key: 'access', value: acc);
+      return acc;
+    }
+    else{
+      print(res.statusCode);
+      return "Error Occured";
+    }
+
+    // storage.write(key: 'access' , value: res.);
+
+  }
+
+   else{
+     return currentAccess;
+  };
+}
+

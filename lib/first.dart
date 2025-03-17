@@ -1,24 +1,36 @@
 
 import 'package:first_project/SIgnUpForm.dart';
 import 'package:first_project/veiws/Griidd.dart';
+import 'package:first_project/veiws/ServerUrl.dart';
 import 'package:first_project/veiws/app1.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert'; // For JSON decoding
 
 import 'package:http/http.dart' as http;
 
+import 'Authentication.dart';
+
 String ur="https://modestgallery.pythonanywhere.com";
 void main(){
+
   runApp(MyApp());
 }
 Future<String> getData() async {
-  http.Response res = await http.get(Uri.parse("https://modestgallery.pythonanywhere.com/carousal/"));
+  print(getAccesstoken());
+  http.Response res = await http.get(Uri.parse(BackendApi.endpoint("carousal")));
       return res.body;
   }
 
 
 
 class MyApp extends StatefulWidget {
+  final  int custom;
+
+  MyApp({this.custom=0});
+
+
+
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -26,11 +38,17 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   int _currentidx = 0;
 
+  @override
+  void initState(){
+    _currentidx=widget.custom;
+  }
+
   // List of pages to display
   final List<Widget> _pages = [
     HomeView(),
-    SignUpForm(),
+    LoginForm(),
     ProdStf(),
+    SignUpForm(),
   ];
 
   void _onItemTapped(int index) {

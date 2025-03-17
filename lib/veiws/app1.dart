@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:carousel_slider/carousel_slider.dart';
 
+import 'ServerUrl.dart';
+
 class HomeView extends StatelessWidget{
 
 
@@ -63,43 +65,11 @@ class SearchBar  extends StatelessWidget{
   }
 
 }
- var daata =[
-{
-"id": 1,
-"image_carousal": "http://localhost:8000/media/homecarousal/Caps.webp",
-"image_name": "Caps"
-},
-{
-"id": 2,
-"image_carousal": "http://localhost:8000/media/homecarousal/Hijab.webp",
-"image_name": "Hijab"
-},
-{
-"id": 3,
-"image_carousal": "http://localhost:8000/media/homecarousal/Jilbab.jpg",
-"image_name": "Jilbab"
-},
-{
-"id": 4,
-"image_carousal": "http://localhost:8000/media/homecarousal/Magnets.jpg",
-"image_name": "Magnets"
-},
-{
-"id": 5,
-"image_carousal": "http://localhost:8000/media/homecarousal/Niqab.webp",
-"image_name": "Niqab"
-},
-{
-"id": 6,
-"image_carousal": "http://localhost:8000/media/homecarousal/Scrunchies.jpg",
-"image_name": "Scrunchies"
-}
-];
 
 class ImagesScrollBar extends StatelessWidget {
   // Function to fetch data from API
   Future<List<Map<String, dynamic>>> fetchCarouselData() async {
-    final response = await http.get(Uri.parse("https://modestgallery.pythonanywhere.com/carousal/"));
+    final response = await http.get(Uri.parse(BackendApi.endpoint("carousal")));
     if (response.statusCode == 200) {
       List<dynamic> data = json.decode(response.body);
       return data
@@ -167,7 +137,7 @@ class ImageCarousal extends StatelessWidget{
 
 
   Future<List<Map<String, dynamic>>> fetchCollections() async {
-    final response= await http.get(Uri.parse("https://modestgallery.pythonanywhere.com/collections/"));
+    final response= await http.get(Uri.parse(BackendApi.endpoint("collections")));
     if (response.statusCode==200){
       final List<dynamic> data= json.decode(response.body);
 
@@ -236,7 +206,7 @@ class ImageCarousal extends StatelessWidget{
 
 class  ImageText extends StatelessWidget{
   Future<List<Map<String, dynamic>>> fetchCategories() async{
-    final response =  await http.get(Uri.parse("https://modestgallery.pythonanywhere.com/category/"));
+    final response =  await http.get(Uri.parse(BackendApi.endpoint("category")));
 
     if (response.statusCode==200){
       List<dynamic> data= json.decode(response.body);
@@ -253,10 +223,7 @@ class  ImageText extends StatelessWidget{
 
   }
 
-  final List<Map<String , String>> objects= [{"name": "https://cdn.pixabay.com/photo/2017/02/01/22/02/mountain-landscape-2031539_960_720.jpg" , "title" :"imagee1"},
-    {"name": "https://cdn.pixabay.com/photo/2017/02/01/22/02/mountain-landscape-2031539_960_720.jpg" , "title" :"imagee1"},
-    {"name": "https://cdn.pixabay.com/photo/2017/02/01/22/02/mountain-landscape-2031539_960_720.jpg" , "title" :"imagee1"},
-    {"name": "https://cdn.pixabay.com/photo/2017/02/01/22/02/mountain-landscape-2031539_960_720.jpg" , "title" :"imagee1"}];
+
   @override
   Widget build(BuildContext context) {
     return   FutureBuilder(

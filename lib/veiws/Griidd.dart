@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'ServerUrl.dart';
+
 void main(){
   runApp(ProdStf());
 }
@@ -20,14 +22,24 @@ class ProdStf extends StatefulWidget {
 
 class _ProdStfState extends State<ProdStf> {
 
-  @override
-  void initState() {
-    super.initState();
-    var _productDataFuture = fetchProductData();
-  }
+
 
   Future<List<Map<String, dynamic>>> fetchProductData() async {
-    final response = await http.get(Uri.parse("https://modestgallery.pythonanywhere.com/custom/"));
+    print(await getTokens());
+
+    print(await getAccesstoken());
+    String token = await getAccesstoken();
+    String endpoint = BackendApi.endpoint("custom");
+
+    print("Access Token: $token");
+    print("API Endpoint: $endpoint");
+    final response = await http.get(Uri.parse(BackendApi.endpoint("custom")),
+      headers: {
+        'Authorization': 'Bearer ${await getAccesstoken()}',
+        'Content-Type': 'application/json',
+      },
+
+    );
 
     if (response.statusCode==200) {
       // final data = json.decode(response.body);
@@ -54,7 +66,10 @@ class _ProdStfState extends State<ProdStf> {
       })).toList();
     }
     else{
-      throw Exception(Text("Data not loaded properly"));
+      print(await getAccesstoken());
+      print(response.body);
+      print(response.statusCode);
+      throw Exception("Data not loaded properly");
     }
 
     }
@@ -67,7 +82,7 @@ class _ProdStfState extends State<ProdStf> {
     double cardHeight = cardWidth * 1.5;
     return  Scaffold(
       appBar: AppBar(
-        title: Center(child: const Text('My First Flutter Application' )),
+        title: Center(child: const Text('Modest Hijab Store' )),
         elevation: 20,
         actions: [
           Icon(Icons.favorite),
@@ -147,7 +162,7 @@ class _ProdStfState extends State<ProdStf> {
     MaterialPageRoute(builder: (context) =>
     ProdDetails(
     id: ProductData[index]["product_variation_id"],)),
-    ); // QuantitySelector();
+    ); // QuantitySelector();`
     },
                                   child:Card(
 
@@ -268,41 +283,5 @@ class SearchBar  extends StatelessWidget{
 
 }
 
-class MyBottomBar extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-
-    return Builder(
-      builder: (newContext) {
-        return Container(
-          // color: Colors.red,
-          padding: EdgeInsets.symmetric(vertical: 10),
-          child: Row(
-
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              IconButton(onPressed: ()=>{
-                Navigator.pushReplacementNamed(context, "/home")
-              }, icon: Icon(Icons.home ) ,   )  ,
-              IconButton(onPressed: ()=>{
-                Navigator.pushReplacementNamed(context, "/account")
-
-
-              }, icon: Icon(Icons.person)) ,
-              IconButton(onPressed: ()=>{
-                Navigator.pushReplacementNamed(context, "/products")
-
-              }, icon: Icon(Icons.shop) ,color: Colors.red,) ,
-
-
-            ],
-          ),
-        );
-      }
-    );
-  }
-
-
-}
 
 
